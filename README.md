@@ -15,8 +15,22 @@ superbi提供直观的UI，拖拽式的编辑体验，配置式的图例创建�
 - 自定义SQL扩展，提供对复杂情况的数据可视化能力。
 - 集成echarts，3d word cloud，更加高度可配置的图表UI效果展示
 
+## 功能介绍
+1.自定义SQL  
 
+  在原始superset中，可以通过选择各种条件控制数据的返回，如果有稍微复杂的应用场景则不能实现，比如对一张表自联返回想要的结果。正是有这样的需求，我们在每一个图例编辑界面加入了一个SQL编辑框，可以在 编辑框中编辑SQL原生语句来实现我们的需求。
+### 使用效果
+   ![Screen Shot 2020-02-25 at 11.13.33 AM _1_.png](https://i.loli.net/2020/10/23/gxuGdA19mXnBwDJ.png)
+### 注意事项
+   原则上我们需要尽量避免使用SQL编辑框这个选项在有其他方法可以实现我们的需求的时候，在使用时我们需要遵守下面这几点避免出现错误
+- SQL语句只能对一张表进行操作
+- 在使用了SQL的图例的里面必须选择正确的Datasource和Visualization Type，Datasource对应SQL语句中操作的数据库表，Visualization Type和SQL语句的返回结果相对应。选择了Visualization Type，SQL必须返回相对应的格式，否则必然出现错误。
+- 对使用了SQL的图例，TimeRange选项选为 No filter
+- 当我们在Dashboards里面使用了FilterBox图例，实现全局的过滤的时候，SQL语句里面要使用变量@filters来表示过滤条件，例如：
 
+         SELECT "LON" AS "LON","LAT" AS "LAT",COUNT(*) AS count FROM long_lat WHERE @filters GROUP BY "LON","LAT" ORDER BY count DESC LIMIT 5000 OFFSET 0;
+
+  在WHERE后加上一个变量@filters,变量表示在FilterBox中选择的过滤条件    
 ## 支持的数据库
 |             数据库类型           |          驱动安装        |       连接字符串          |
 | ---------------------- | ------------------------ | ------------------------ |
