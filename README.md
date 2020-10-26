@@ -23,6 +23,12 @@ superbi提供直观的UI，拖拽式的编辑体验，配置式的图例创建�
    ![Screen Shot 2020-02-25 at 11.13.33 AM _1_.png](https://i.loli.net/2020/10/23/gxuGdA19mXnBwDJ.png)  
    
    在某些图列中，一个SQL语句的查询结果不能满足我们的需求，这个时候需要多条的SQL语句执行需求  
+   在编写SQL语句的时候加入变量@split,对多条SQL语句进行分割，例如：
+   
+    SELECT state AS state,num AS num FROM birth_names GROUP BY state,num ORDER BY COUNT(*) DESC LIMIT 10 OFFSET 0;
+    @split
+    SELECT state AS state2, num AS num2 FROM birth_names GROUP BY state2,num2 ORDER BY COUNT(*) DESC LIMIT 10 OFFSET 0;
+   如上示例代码，由两个SQL语句加变量@split组成，可以使用@split分割任意多的SQL语句。
 ### SQL案例
    ![image2020-4-9 11_10_36.png](https://i.loli.net/2020/10/23/zImdV6Ac8pHrUvF.png)
 ### 使用效果
